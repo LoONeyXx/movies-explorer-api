@@ -37,13 +37,13 @@ export async function addUser(req, res, next) {
 export async function login(req, res, next) {
   try {
     const { email, password } = req.body;
-    const user = await User.findUserByCredential(email, password);
+    const user = await User.findUserByCredentials(email, password);
     const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
     res.cookie('jwt', token, {
       maxAge: 36000000,
       httpOnly: true,
     });
-    res.status(200).send({ token, _id: user._id });
+    res.status(200).send({ _id: user._id });
   } catch (err) {
     next(err);
   }
@@ -57,7 +57,7 @@ export async function logout(req, res, next) {
 }
 export async function getUser(req, res, next) {
   try {
-    const user = await User.find({ _id: req.user._id }).orFail();
+    const user = await User.findById(req.user._id).orFail();
     res.status(200).send({ data: user });
   } catch (err) {
     if (err instanceof mongoose.Error.DocumentNotFoundError) {
@@ -71,10 +71,6 @@ export async function getUser(req, res, next) {
 export async function updateUser(req, res, next) {
   try {
     const { email, name } = req.body;
-    // const isAlreadyExistEmail = await User.find({ email })
-    // if (isAlreadyExistEmail) {
-    //   throw new AlreadyExistError('Такой Email уже существует')
-    // }
     const id = req.user._id;
     const user = await User.findByIdAndUpdate(id, {
       $set: { email, name },
@@ -90,6 +86,10 @@ export async function updateUser(req, res, next) {
         || err instanceof mongoose.Error.CastError
     ) {
       next(new ValidationError(err));
+      return;
+    }
+    if (err.code === 11000) {
+      next(new AlreadyExistError('Пользователь с таким Email уже существует'));
       return;
     }
     if (err instanceof mongoose.Error.NotFoundError) {

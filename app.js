@@ -13,7 +13,7 @@ const app = express();
 app.use(helmet());
 app.use(cookieParser());
 app.disable('x-powered-by');
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ credentials: true }));
 app.use(bodyParser.json());
 app.use(router);
 mongoose.connect(BASE_URL);

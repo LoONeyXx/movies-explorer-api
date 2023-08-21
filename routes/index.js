@@ -14,7 +14,7 @@ const limiter = rateLimit({
 router.use(limiter);
 router.use(userRouter);
 router.use(moviesRouter);
-router.use('*', (req, res, next) => {
+router.get('*', (req, res, next) => {
   next(new NotFoundError('Такой страницы не существует'));
 });
 export default router;
