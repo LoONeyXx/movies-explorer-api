@@ -42,6 +42,9 @@ export async function login(req, res, next) {
     res.cookie('jwt', token, {
       maxAge: 36000000,
       httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+
     });
     res.status(200).send({ _id: user._id });
   } catch (err) {
