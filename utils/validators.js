@@ -29,6 +29,7 @@ export const userValidatorAuth = () => celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
+    name: Joi.string().max(30).min(2),
   }),
 });
 export const userValidatorUpdate = () => celebrate({
