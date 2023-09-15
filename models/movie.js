@@ -52,7 +52,6 @@ const movieSchema = new mongoose.Schema(
     movieId: {
       type: Number,
       required: true,
-      unique: true,
     },
     nameRU: {
       type: String,
@@ -67,5 +66,4 @@ const movieSchema = new mongoose.Schema(
 );
 
 const model = mongoose.model('movie', movieSchema);
-model.createIndexes();
 export default model;
