@@ -62,8 +62,9 @@ const movieSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { versionKey: false },
+  { versionKey: false, autoIndex: false },
 );
 
 const model = mongoose.model('movie', movieSchema);
+
 export default model;
