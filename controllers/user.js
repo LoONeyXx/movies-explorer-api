@@ -53,7 +53,7 @@ export async function login(req, res, next) {
 }
 export async function logout(req, res, next) {
   try {
-    res.clearCookie('jwt').send({ message: 'Выход' });
+    res.clearCookie('jwt', { sameSite: 'none', secure: true }).send({ message: 'Выход' });
   } catch (error) {
     next(error);
   }
