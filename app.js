@@ -16,7 +16,7 @@ app.use(helmet());
 dotenv.config();
 app.use(cookieParser());
 app.disable('x-powered-by');
-app.use(cors({ origin: ['http://localhost:3000', 'https://moovielooney.nomoredomainsrocks.ru'], credentials: true }));
+app.use(cors({ origin: 'https://moovielooney.nomoredomainsrocks.ru', credentials: true }));
 app.use(bodyParser.json());
 app.use(requestLogger);
 app.use(router);
