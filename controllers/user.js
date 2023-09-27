@@ -40,7 +40,6 @@ export async function login(req, res, next) {
     const user = await User.findUserByCredentials(email, password);
     const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
     res.cookie('jwt', token, {
-      maxAge: 36000000,
       httpOnly: true,
       sameSite: 'none',
       secure: true,
