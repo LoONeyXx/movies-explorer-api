@@ -5,13 +5,13 @@ import moviesRouter from './movies.js';
 import NotFoundError from '../errors/not-found-error.js';
 
 const router = express.Router();
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 1000, //
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-router.use(limiter);
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000,
+//   max: 1000, //
+//   standardHeaders: true,
+//   legacyHeaders: false,
+// });
+// router.use(limiter);
 router.use(userRouter);
 router.use(moviesRouter);
 router.get('*', (req, res, next) => {
